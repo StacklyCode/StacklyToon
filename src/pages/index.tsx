@@ -4,7 +4,7 @@ import { NextPageFC } from 'next';
 const PageIndex: NextPageFC = () => {
   return (
     <>
-      <AtomText>homepage</AtomText>
+      <AtomText>HOMEPAGE</AtomText>
       <AtomButton />
     </>
   );
