@@ -1,8 +1,7 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
 import CONFIG from '@Config/index';
-import cookie from 'js-cookie';
 
 const httpLink = createHttpLink({
   uri: `${CONFIG.GRAPHQL_URL}`
@@ -11,8 +10,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    orgcode: CONFIG.ORG_CODE,
-    authorization: `Bearer ${cookie.get(`bearer`)}`
+    orgcode: CONFIG.ORG_CODE
   }
 }));
 
