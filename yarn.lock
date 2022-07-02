@@ -373,10 +373,10 @@
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.1.0.tgz"
   integrity sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==
 
-"@stacklycore/ui@0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@stacklycore/ui/-/ui-0.0.12.tgz#9cb36bb536f7d720b06fd48a08b833fbb709ace5"
-  integrity sha512-DXMaP9Q7xv0JuVojN6NNJA9KCA7xyK9gBglKft8CNoo01OXUPGTkRDHCJnMAbpIFHmScafqtyfICXXI3BYakyw==
+"@stacklycore/ui@0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@stacklycore/ui/-/ui-0.0.13.tgz#7c7a95e53d9753bb3208926807ba7ef1ff444233"
+  integrity sha512-J8X9msqkAtsJqxh2Pj5/Y8+8MpbonZUXATFuEMmT+q8F1/DtnYoNOEFR1RdUGB2fl3EWFxySd5MfHuvbdP+a3Q==
   dependencies:
     "@emotion/react" "^11.9.3"
     "@emotion/styled" "^11.9.3"
