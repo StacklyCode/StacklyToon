@@ -3,31 +3,31 @@ import { IPalette } from '@stacklycore/ui';
 export const ThemeLight: IPalette = {
   button: {
     color: {
-      primary: '#3459A8',
-      secondary: '#5a6a8a',
-      accent: '#1461EB'
+      primary: '#D70C06',
+      secondary: '#E1E0E0',
+      accent: '#2C2222'
     },
     type: 'flat'
   },
   wrapper: {
     color: {
-      primary: '#fafafa',
-      secondary: '#5a6a8a',
-      accent: '#1461EB'
+      primary: '#FDFEFF',
+      secondary: '#2C2222',
+      accent: '#2C2222'
     }
   },
   icon: {
     color: {
-      primary: '#202124',
-      secondary: '#5a6a8a',
-      accent: '#3459a8'
+      primary: '#2C2222',
+      secondary: '#575859',
+      accent: '#FFFFFF'
     }
   },
   text: {
     color: {
-      primary: '#5a6a8a',
-      secondary: '#fafafa',
-      accent: '#1461EB'
+      primary: '#2C2222',
+      secondary: '#727272',
+      accent: '#D7D6D6'
     }
   },
   input: {
