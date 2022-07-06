@@ -1,11 +1,10 @@
-import { AtomButton, AtomText } from '@stacklycore/ui';
+import Header from '@Src/components/Header';
 import { NextPageFC } from 'next';
 
 const PageIndex: NextPageFC = () => {
   return (
     <>
-      <AtomText>HOMEPAGE</AtomText>
-      <AtomButton />
+      <Header />
     </>
   );
 };
