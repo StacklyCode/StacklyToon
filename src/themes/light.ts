@@ -1,12 +1,18 @@
+import { css } from '@emotion/react';
 import { IPalette } from '@stacklycore/ui';
+import { FontFamily } from './constants';
 
 export const ThemeLight: IPalette = {
+  css: () => css`
+    font-family: 'Inter', sans-serif;
+  `,
   button: {
     color: {
       primary: '#D70C06',
       secondary: '#E1E0E0',
       accent: '#2C2222'
     },
+    css: FontFamily,
     type: 'flat'
   },
   wrapper: {
@@ -18,9 +24,9 @@ export const ThemeLight: IPalette = {
   },
   icon: {
     color: {
-      primary: '#2C2222',
-      secondary: '#575859',
-      accent: '#FFFFFF'
+      primary: '#000000',
+      secondary: '#2C2222',
+      accent: '#000000'
     }
   },
   text: {
@@ -28,14 +34,16 @@ export const ThemeLight: IPalette = {
       primary: '#2C2222',
       secondary: '#727272',
       accent: '#D7D6D6'
-    }
+    },
+    css: FontFamily
   },
   input: {
     color: {
-      primary: '#fafafa',
+      primary: '#FFFFFF',
       secondary: '#3459a8',
       accent: '#db4a4a'
-    }
+    },
+    css: FontFamily
   },
   scrollbar: {
     width: 7,
