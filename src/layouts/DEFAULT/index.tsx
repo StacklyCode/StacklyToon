@@ -1,6 +1,7 @@
-import { FC } from 'react';
-import { DefaultLayout } from '@stacklycore/ui';
+import { ContainerStyled, GeneralContainer } from '@Src/css/container';
 import AuthContext from '@Src/hooks/authContext';
+import { AtomWrapper } from '@stacklycore/ui';
+import { FC } from 'react';
 
 type Props = {
   role?: string | string[];
@@ -8,7 +9,9 @@ type Props = {
 
 const Default: FC<Props> = ({ children }) => (
   <AuthContext>
-    <DefaultLayout>{children}</DefaultLayout>
+    <AtomWrapper css={GeneralContainer}>
+      <AtomWrapper css={ContainerStyled}>{children}</AtomWrapper>
+    </AtomWrapper>
   </AuthContext>
 );
 export default Default;
