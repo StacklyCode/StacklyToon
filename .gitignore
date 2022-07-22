@@ -3,6 +3,7 @@
 .pnp.js
 /.next/
 /out/
+/.idea
 /build
 .DS_Store
 *.pem
