@@ -26,9 +26,13 @@ export const SearchStyles = css`
     border-bottom-right-radius: 0;
     border-bottom-left-radius: ${calculateInRem(10)};
     width: 100% !important;
+    height: 42px;
     ::placeholder {
       font-weight: 400;
     }
   }
 `;
-export const InputSearch = css``;
+export const SearchIcon = css`
+  width: 1.5rem;
+  height: 1.5rem;
+`;

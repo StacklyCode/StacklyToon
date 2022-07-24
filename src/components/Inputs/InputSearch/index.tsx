@@ -1,6 +1,6 @@
-import { AtomButton, AtomInput } from '@stacklycore/ui';
+import { AtomButton, AtomIcon, AtomInput } from '@stacklycore/ui';
 import AtomWrapper from '@stacklycore/ui/build/core/@atoms/AtomWrapper';
-import { SearchStyles } from './styled';
+import { SearchIcon, SearchStyles } from './styled';
 
 const AnimationDisabled = {
   whileHover: { scale: 1, transition: { duration: 0 } },
@@ -20,7 +20,10 @@ const InputSearch = () => {
         }}
       />
       <AtomButton {...AnimationDisabled} className="search-button">
-        <span>Buscar</span>
+        <AtomIcon
+          icon="https://storage.googleapis.com/cdn-bucket-ixulabs-platform/STCO-0001/search-normal.svg"
+          css={SearchIcon}
+        />
       </AtomButton>
     </AtomWrapper>
   );
