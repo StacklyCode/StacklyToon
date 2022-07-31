@@ -5,6 +5,10 @@ export const LISTSERIES = gql`
     listSeries {
       title
       id
+      image
+      studio {
+        name
+      }
     }
   }
 `;

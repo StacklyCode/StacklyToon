@@ -9,7 +9,7 @@ import { ChannelContainer, SwipperChannelCSS } from './styled';
 const Channels = () => {
   const { data } = useQuery<IQueryFilter<'listStudios'>>(LISTSTUDIOS);
   return (
-    <AtomWrapper css={ChannelContainer}>
+    <AtomWrapper as="section" css={ChannelContainer}>
       <AtomWrapper className="channel-title-container">
         <AtomIcon
           icon="https://storage.googleapis.com/cdn-bucket-ixulabs-platform/STCO-0001/monitor.svg"
