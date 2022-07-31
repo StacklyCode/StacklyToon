@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
-import { IQuery, IQueryFilter } from 'graphql';
+import { IGlobal, IQueryFilter } from 'graphql';
 import { DocumentNode } from 'graphql/language/ast';
 
-const useQueryFilter = (QUERY: DocumentNode, FILTER: keyof IQuery) => {
+const useQueryFilter = (QUERY: DocumentNode, FILTER: keyof IGlobal) => {
   const USEQUERY = useQuery<IQueryFilter<typeof FILTER>>(QUERY);
   return USEQUERY;
 };
