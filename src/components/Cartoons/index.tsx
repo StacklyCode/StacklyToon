@@ -1,12 +1,36 @@
 import { useQuery } from '@apollo/client';
 import { AtomIcon, AtomText, AtomWrapper } from '@stacklycore/ui';
-import { IQueryFilter } from 'graphql';
+import { useViewportScroll } from 'framer-motion';
+import { IQueryFilter, ISerie } from 'graphql';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 import { LISTSERIES } from '../../apollo/query/listSeries';
 import CartoonsItem from './components/CartoonsItem';
 import { CartoonsContainer } from './styles';
 
+const itemsAtom = atom(24);
+const seriesAtom = atom([] as ISerie[] | undefined);
+const seriesFilteredAtom = atom((get) =>
+  get(seriesAtom)?.filter((_, index) => index < get(itemsAtom))
+);
 const Cartoons = () => {
-  const { data } = useQuery<IQueryFilter<'listSeries'>>(LISTSERIES);
+  const setItems = useSetAtom(itemsAtom);
+  const [series, setSeries] = useAtom(seriesAtom);
+  const seriesFiltered = useAtomValue(seriesFilteredAtom);
+  useQuery<IQueryFilter<'listSeries'>>(LISTSERIES, {
+    onCompleted: (data) => {
+      setSeries(data.listSeries);
+    }
+  });
+  const { scrollYProgress } = useViewportScroll();
+
+  useEffect(() => {
+    return scrollYProgress.onChange((latest) => {
+      if (latest > 0.9) {
+        setItems((prev) => Math.min(series?.length ?? 0, prev + 24));
+      }
+    });
+  }, [series?.length]);
   return (
     <AtomWrapper as="section" css={CartoonsContainer}>
       <AtomWrapper className="cartoons-title-container">
@@ -17,8 +41,9 @@ const Cartoons = () => {
         <AtomText className="cartoons-title">Cartoons de la infancia</AtomText>
       </AtomWrapper>
       <AtomWrapper className="cartoons-item-container">
-        {data?.listSeries.map((item) => (
+        {seriesFiltered?.map((item, index) => (
           <CartoonsItem
+            delay={index}
             key={item.id}
             studio={item.studio.name}
             name={item.title}
