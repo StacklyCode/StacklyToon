@@ -3,6 +3,7 @@ import { AtomIcon, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { useViewportScroll } from 'framer-motion';
 import { IQueryFilter, ISerie } from 'graphql';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import Link from 'next/link';
 import { useEffect } from 'react';
 import { LISTSERIES } from '../../apollo/query/listSeries';
 import CartoonsItem from './components/CartoonsItem';
@@ -42,13 +43,15 @@ const Cartoons = () => {
       </AtomWrapper>
       <AtomWrapper className="cartoons-item-container">
         {seriesFiltered?.map((item, index) => (
-          <CartoonsItem
-            delay={index}
-            key={item.id}
-            studio={item.studio.name}
-            name={item.title}
-            image={item.image ?? ''}
-          />
+          <Link href={`/serie/${item.id}`} key={item.id} passHref>
+            <CartoonsItem
+              delay={index}
+              studio={item.studio.name}
+              name={item.title}
+              image={item.image ?? ''}
+              id={item.id}
+            />
+          </Link>
         ))}
       </AtomWrapper>
     </AtomWrapper>

@@ -39,7 +39,6 @@ export const CartoonsContainer = css`
     display: flex;
     flex-direction: column;
     gap: ${calculateInRem(8)};
-    cursor: pointer;
     &-text {
       font-weight: bold;
       color: #2c2222;
@@ -50,7 +49,8 @@ export const CartoonsContainer = css`
       color: #575859;
     }
     &-image {
-      border-radius: 10px !important ;
+      border-radius: 10px !important;
+      cursor: pointer;
       img {
         width: 100% !important;
       }
