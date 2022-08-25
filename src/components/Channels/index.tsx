@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { LISTSTUDIOS } from '@Src/apollo/query/listStudio';
 import { AtomIcon, AtomImage, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { IQueryFilter } from 'graphql';
+import Link from 'next/link';
 import AtomCarrousell from '../UI/AtomCarrousell';
 import { channelsInfo, SwipperProps } from './constants';
 import { ChannelContainer, SwipperChannelCSS } from './styled';
@@ -26,11 +27,14 @@ const Channels = () => {
           customCSS={SwipperChannelCSS}
         >
           {data?.listStudios.map((item) => (
-            <AtomImage
-              key={item.id}
-              className="channel-image"
-              src={channelsInfo[item.name as keyof typeof channelsInfo]?.image}
-            />
+            <Link href={`/canal/${item.id}`} key={item.id} passHref>
+              <AtomImage
+                className="channel-image"
+                src={
+                  channelsInfo[item.name as keyof typeof channelsInfo]?.image
+                }
+              />
+            </Link>
           ))}
         </AtomCarrousell>
       </AtomWrapper>
