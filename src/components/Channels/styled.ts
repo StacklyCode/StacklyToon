@@ -73,15 +73,16 @@ export const SwipperChannelCSS = css`
   }
 `;
 export const ChannelImage = css`
-  max-width: 540px;
   width: 100%;
+  height: 350px !important;
   .channel-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
   @media screen and (min-width: ${ResponsiveQueries.md}) {
     border-bottom-left-radius: ${calculateInRem(10)};
     border-bottom-right-radius: ${calculateInRem(10)};
+    max-width: 540px;
   }
 `;

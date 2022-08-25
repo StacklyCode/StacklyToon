@@ -30,9 +30,15 @@ export const CartoonsContainer = css`
     grid-template-columns: repeat(auto-fill, minmax(var(--min), var(--max)));
     column-gap: ${calculateInRem(32)};
     row-gap: ${calculateInRem(32)};
+    &.cartoons-studio {
+      margin-top: ${calculateInRem(40)};
+    }
     @media screen and (min-width: ${ResponsiveQueries.md}) {
       --min: 140px;
       --max: 185px;
+      &.cartoons-studio {
+        margin-top: ${calculateInRem(80)};
+      }
     }
   }
   .cartoon-item {

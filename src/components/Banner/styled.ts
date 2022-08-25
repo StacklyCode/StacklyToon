@@ -2,10 +2,12 @@ import { css } from '@emotion/react';
 import { ResponsiveQueries } from '@Src/themes/constants';
 import { calculateInRem } from '@Utils/convertToRem';
 
+const bannerColor = '#2c2221';
 export const BannerStyled = css`
-  background-color: #2c2222;
+  background-color: ${bannerColor};
   border-radius: 10px;
   position: relative;
+  min-height: 400px;
   .banner-title {
     color: white;
     font-weight: bold;
@@ -31,7 +33,7 @@ export const BannerStyled = css`
     }
   }
   .banner-content {
-    background-color: #2c2222;
+    background-color: ${bannerColor};
     padding: 1.5rem;
     display: flex;
     justify-content: center;
@@ -39,6 +41,27 @@ export const BannerStyled = css`
     height: 100%;
     @media screen and (min-width: ${ResponsiveQueries.xl}) {
       padding: ${calculateInRem(120)} ${calculateInRem(80)};
+    }
+  }
+  .banner-icon {
+    width: 24px;
+    height: 24px;
+    svg {
+      path {
+        fill: #b7b5b5;
+      }
+    }
+  }
+  .banner-shows {
+    display: flex;
+    gap: ${calculateInRem(8)};
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: ${bannerColor};
+    margin-top: ${calculateInRem(16)};
+    p span {
+      color: #b7b5b5;
+      font-weight: bold;
     }
   }
   display: grid;

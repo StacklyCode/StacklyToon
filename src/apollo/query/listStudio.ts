@@ -1,11 +1,17 @@
 import { gql } from '@apollo/client';
 
 export const LISTSTUDIOS = gql`
-  query {
-    listStudios {
-      name
-      description
+  query ListStudios($filter: StudioFilterInput) {
+    listStudios(filter: $filter) {
+      createdAt
       id
+      description
+      updatedAt
+      name
+      series {
+        title
+        image
+      }
     }
   }
 `;
