@@ -20,6 +20,7 @@ export const HeaderWrapper = css`
 export const HeaderIcon = css`
   width: 136px;
   height: 24px;
+  cursor: pointer;
 `;
 
 export const HeaderLinks = css`
