@@ -1,3 +1,4 @@
+import Header from '@Src/components/Header';
 import { ContainerStyled, GeneralContainer } from '@Src/css/container';
 import AuthContext from '@Src/hooks/authContext';
 import { AtomWrapper } from '@stacklycore/ui';
@@ -10,7 +11,12 @@ type Props = {
 const Default: FC<Props> = ({ children }) => (
   <AuthContext>
     <AtomWrapper css={GeneralContainer}>
-      <AtomWrapper css={ContainerStyled}>{children}</AtomWrapper>
+      <AtomWrapper css={ContainerStyled}>
+        <>
+          <Header />
+          {children}
+        </>
+      </AtomWrapper>
     </AtomWrapper>
   </AuthContext>
 );
