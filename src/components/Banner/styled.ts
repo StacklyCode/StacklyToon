@@ -3,7 +3,10 @@ import { ResponsiveQueries } from '@Src/themes/constants';
 import { calculateInRem } from '@Utils/convertToRem';
 
 const bannerColor = '#2c2221';
-export const BannerStyled = css`
+type BannerProps = {
+  hasDivision?: boolean;
+};
+export const BannerStyled = (props: BannerProps) => css`
   background-color: ${bannerColor};
   border-radius: 10px;
   position: relative;
@@ -64,12 +67,15 @@ export const BannerStyled = css`
       font-weight: bold;
     }
   }
-  display: grid;
-  grid-template-columns: 1fr;
-  @media screen and (min-width: ${ResponsiveQueries.md}) {
+  ${props.hasDivision &&
+  css`
     display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+    grid-template-columns: 1fr;
+    @media screen and (min-width: ${ResponsiveQueries.md}) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  `}
 `;
 export const BannerVideo = css`
   height: 200px;
