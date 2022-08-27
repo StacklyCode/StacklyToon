@@ -1,18 +1,30 @@
 import { css } from '@emotion/react';
+import CartoonsItem from '@Src/components/Cartoons/components/CartoonsItem';
+import { CartoonsContainer } from '@Src/components/Cartoons/styles';
 import useSeriesInifity from '@Src/hooks/useSeriesInifity';
 import { AtomIcon, AtomInput, AtomText, AtomWrapper } from '@stacklycore/ui';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import CartoonsItem from './components/CartoonsItem';
-import { CartoonsContainer } from './styles';
 
-const Cartoons = () => {
+const Index = () => {
   const [search, setSearch] = useState('');
+  const router = useRouter();
   const { data: series } = useSeriesInifity({
+    skip: !router.query.search,
     variables: {
       filter: {
-        title: {
-          contains: search
-        }
+        and: [
+          {
+            title: {
+              contains: router.query.search
+            }
+          },
+          {
+            title: {
+              contains: search
+            }
+          }
+        ]
       }
     }
   });
@@ -23,7 +35,9 @@ const Cartoons = () => {
           icon="https://storage.googleapis.com/cdn-bucket-ixulabs-platform/STCO-0001/video-circle.svg"
           className="cartoons-icon"
         />
-        <AtomText className="cartoons-title">Cartoons de la infancia</AtomText>
+        <AtomText className="cartoons-title">
+          Resultados de la búsqueda: {router.query.search}
+        </AtomText>
       </AtomWrapper>
       <AtomWrapper
         css={css`
@@ -55,4 +69,4 @@ const Cartoons = () => {
   );
 };
 
-export default Cartoons;
+export default Index;

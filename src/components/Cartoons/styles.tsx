@@ -8,13 +8,14 @@ export const RandomNumberBetween = (min: number, max: number) => {
 
 export const CartoonsContainer = css`
   padding-bottom: 4rem;
+  overflow: hidden;
   .cartoons-title-container {
     display: flex;
     gap: ${calculateInRem(8)};
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: ${calculateInRem(32)};
+    margin-bottom: ${calculateInRem(8)};
   }
   .cartoons-icon {
     width: ${calculateInRem(24)};
@@ -28,6 +29,7 @@ export const CartoonsContainer = css`
     }
   }
   .cartoons-item-container {
+    overflow: hidden;
     --min: 100px;
     --max: 155px;
     display: grid;
