@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import { EPISODEBYID } from '@Src/apollo/query/episodeById';
 import { SERIESBYID } from '@Src/apollo/query/serieById';
-import { AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
-import { IQueryFilter } from 'graphql';
+import { AtomImage, AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
+import { IEpisode, IQueryFilter } from 'graphql';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 const SerieItemPage = () => {
@@ -28,20 +28,45 @@ const SerieItemPage = () => {
     [data, dataSerie, router]
   );
 
+  const sortedEpisodes = useMemo(
+    () =>
+      dataSerie?.serieById?.seasons
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            Number(a.title?.match(/\d+/g)?.[0]) -
+            Number(b.title?.match(/\d+/g)?.[0])
+        )
+        ?.reduce(
+          (a, b) => [
+            ...a,
+            ...(b.episodes
+              ?.slice()
+              ?.sort(
+                (a, b) =>
+                  Number(a.title?.match(/\d+/g)?.[0]) -
+                  Number(b.title?.match(/\d+/g)?.[0])
+              ) ?? [])
+          ],
+          [] as IEpisode[]
+        ),
+    [season]
+  );
+
   const beforeEpisode = useMemo(() => {
     const episodeIndex =
-      season?.episodes?.findIndex(
+      sortedEpisodes?.findIndex(
         (episode) => episode.id === router.query.episode
       ) ?? 0;
-    return season?.episodes?.[episodeIndex - 1];
+    return sortedEpisodes?.[episodeIndex - 1];
   }, [dataSerie, router]);
 
   const nextEpisode = useMemo(() => {
     const episodeIndex =
-      season?.episodes?.findIndex(
+      sortedEpisodes?.findIndex(
         (episode) => episode.id === router.query.episode
       ) ?? 1;
-    return season?.episodes?.[episodeIndex + 1];
+    return sortedEpisodes?.[episodeIndex + 1];
   }, [dataSerie, router]);
 
   return (
@@ -52,12 +77,19 @@ const SerieItemPage = () => {
           cursor: pointer;
           margin-bottom: 10px;
         `}
-        link={`/${router.query.serie}`}
+        link={`/${dataSerie?.serieById?.studioId}/${dataSerie?.serieById?.id}/${router.query.season}`}
       >
         Volver a la temporada
       </AtomLink>
-      <AtomText>EPISODE ITEM</AtomText>
-      <AtomText>{router.query?.episode}</AtomText>
+      <AtomWrapper
+        css={css`
+          gap: 10px;
+        `}
+      >
+        <AtomText>{dataSerie?.serieById?.title}</AtomText>
+        <AtomText>{season?.title}</AtomText>
+        <AtomImage src={dataSerie?.serieById?.image} />
+      </AtomWrapper>
       <AtomWrapper
         css={css`
           display: flex;
@@ -104,7 +136,7 @@ const SerieItemPage = () => {
             <>
               <AtomText>Capitulo anterior: </AtomText>
               <AtomLink
-                link={`/${router.query.serie}/${season?.id}/${beforeEpisode?.id}`}
+                link={`/${dataSerie?.serieById?.studioId}/${dataSerie?.serieById?.id}/${beforeEpisode?.seasonId}/${beforeEpisode.id}`}
               >
                 {beforeEpisode?.title}
               </AtomLink>
@@ -119,53 +151,63 @@ const SerieItemPage = () => {
         >
           <AtomText>Capitulo siguiente: </AtomText>
           <AtomLink
-            link={`/${router.query.serie}/${season?.id}/${nextEpisode?.id}`}
+            link={`/${dataSerie?.serieById?.studioId}/${dataSerie?.serieById?.id}/${nextEpisode?.seasonId}/${nextEpisode?.id}`}
           >
             {nextEpisode?.title}
           </AtomLink>
         </AtomWrapper>
       </AtomWrapper>
 
-      <AtomWrapper
-        css={css`
-          display: flex;
-          flex-direction: column;
-          padding: 10px;
-        `}
-      >
-        <AtomLink
-          css={css`
-            color: #d70c06;
-            cursor: pointer;
-          `}
-          link={`/${router.query.serie}/${season?.id}`}
-        >
-          {season?.title}
-        </AtomLink>
-
-        {season?.episodes
-          ?.slice()
-          ?.sort(
-            (a, b) =>
-              Number(a.title?.match(/\d+/g)?.[0]) -
-              Number(b.title?.match(/\d+/g)?.[0])
-          )
-          ?.map((episode) => (
+      {dataSerie?.serieById?.seasons
+        ?.slice()
+        ?.sort(
+          (a, b) =>
+            Number(a.title?.match(/\d+/g)?.[0]) -
+            Number(b.title?.match(/\d+/g)?.[0])
+        )
+        ?.map((season) => (
+          <AtomWrapper
+            key={season.id}
+            css={css`
+              display: flex;
+              flex-direction: column;
+              padding: 10px;
+            `}
+          >
             <AtomLink
-              key={episode.id}
-              link={`/${router.query.serie}/${season.id}/${episode.id}`}
               css={css`
-                padding: 5px 10px;
+                color: #d70c06;
                 cursor: pointer;
-                color: ${episode.id === router.query.episode
-                  ? '#d70c06'
-                  : '#202124'};
               `}
+              link={`/${dataSerie?.serieById?.studioId}/${dataSerie?.serieById?.id}/${season.id}`}
             >
-              {episode.title}
+              {season?.title}
             </AtomLink>
-          ))}
-      </AtomWrapper>
+
+            {season?.episodes
+              ?.slice()
+              ?.sort(
+                (a, b) =>
+                  Number(a.title?.match(/\d+/g)?.[0]) -
+                  Number(b.title?.match(/\d+/g)?.[0])
+              )
+              ?.map((episode) => (
+                <AtomLink
+                  key={episode.id}
+                  link={`/${dataSerie?.serieById?.studioId}/${dataSerie?.serieById?.id}/${season.id}/${episode.id}`}
+                  css={css`
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    color: ${episode.id === router.query.episode
+                      ? '#d70c06'
+                      : '#202124'};
+                  `}
+                >
+                  {episode.title}
+                </AtomLink>
+              ))}
+          </AtomWrapper>
+        ))}
     </>
   );
 };

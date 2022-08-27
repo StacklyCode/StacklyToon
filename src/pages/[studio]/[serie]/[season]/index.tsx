@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import { SERIESBYID } from '@Src/apollo/query/serieById';
-import { AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
+import { AtomImage, AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { IQueryFilter } from 'graphql';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -29,12 +29,20 @@ const SerieItemPage = () => {
           cursor: pointer;
           margin-bottom: 10px;
         `}
-        link={`/${router.query.serie}`}
+        link={`/${data?.serieById?.studioId}/${router.query.serie}`}
       >
-        Volver a la temporada
+        Volver a la serie
       </AtomLink>
-      <AtomText>SEASON ITEM</AtomText>
-      <AtomText>{router.query?.season}</AtomText>
+      <AtomWrapper
+        css={css`
+          gap: 10px;
+        `}
+      >
+        <AtomText>{data?.serieById?.title}</AtomText>
+        <AtomText>{season?.title}</AtomText>
+        <AtomImage src={data?.serieById?.image} />
+      </AtomWrapper>
+
       <AtomWrapper
         css={css`
           display: flex;
@@ -42,16 +50,6 @@ const SerieItemPage = () => {
           padding: 10px;
         `}
       >
-        <AtomLink
-          css={css`
-            color: #d70c06;
-            cursor: pointer;
-          `}
-          link={`/${router.query.serie}/${season?.id}`}
-        >
-          {season?.title}
-        </AtomLink>
-
         {season?.episodes
           ?.slice()
           ?.sort(
@@ -62,7 +60,7 @@ const SerieItemPage = () => {
           ?.map((episode) => (
             <AtomLink
               key={episode.id}
-              link={`/${router.query.serie}/${season.id}/${episode.id}`}
+              link={`/${data?.serieById?.studioId}/${data?.serieById?.id}/${season.id}/${episode.id}`}
               css={css`
                 padding: 5px 10px;
                 cursor: pointer;

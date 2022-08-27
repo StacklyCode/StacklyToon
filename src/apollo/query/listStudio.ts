@@ -9,6 +9,7 @@ export const LISTSTUDIOS = gql`
       updatedAt
       name
       series {
+        id
         title
         image
       }

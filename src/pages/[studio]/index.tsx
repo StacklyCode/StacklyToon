@@ -1,39 +1,47 @@
 import { useQuery } from '@apollo/client';
-import { LISTSTUDIOS } from '@Src/apollo/query/listStudio';
+import { STUDIOBYID } from '@Src/apollo/query/studioById';
 import Banner from '@Src/components/Banner';
 import CartoonsItem from '@Src/components/Cartoons/components/CartoonsItem';
 import { CartoonsContainer } from '@Src/components/Cartoons/styles';
 import { channelsInfo } from '@Src/components/Channels/constants';
 import { ChannelImage } from '@Src/components/Channels/styled';
+import useSeriesInifity from '@Src/hooks/useSeriesInifity';
 import { AtomIcon, AtomImage, AtomText, AtomWrapper } from '@stacklycore/ui';
-import { IQueryFilter } from 'graphql';
-import Link from 'next/link';
+import { ISerie } from 'graphql';
 import { useRouter } from 'next/router';
 
 const ChannelView = () => {
   const router = useRouter();
-  const { data } = useQuery<IQueryFilter<'listStudios'>>(LISTSTUDIOS, {
-    skip: !router.query.id,
+  const { data } = useQuery(STUDIOBYID, {
+    skip: !router.query.studio,
+    variables: {
+      id: router.query.studio
+    }
+  });
+
+  const { data: series } = useSeriesInifity({
+    skip: !router.query.studio,
     variables: {
       filter: {
-        id: {
-          eq: router.query.id
+        studio: {
+          id: {
+            eq: router.query.studio
+          }
         }
       }
     }
   });
-  const studioInfo = data?.listStudios?.[0];
-  // TODO: REFACTOR CARTOONS COMPONENT TO RECEIVE DATA
+
   return (
     <>
       <Banner>
         <AtomWrapper className={'banner-content'}>
           <AtomText as={'h1'} className={'banner-title'}>
-            {studioInfo?.name}
+            {data?.studioById?.name}
           </AtomText>
           <AtomText as={'p'} className={'banner-description'}>
-            Conoce todas las series de {studioInfo?.name} que tomaron parte de
-            tu infancia.
+            Conoce todas las series de {data?.studioById?.name} que tomaron
+            parte de tu infancia.
           </AtomText>
           <AtomWrapper className="banner-shows">
             <AtomIcon
@@ -41,14 +49,15 @@ const ChannelView = () => {
               className="banner-icon"
             />
             <AtomText as={'p'} className={'banner-studio-description'}>
-              <span> {studioInfo?.series?.length} series disponibles</span>
+              <span>{data?.studioById?.series?.length} series disponibles</span>
             </AtomText>
           </AtomWrapper>
         </AtomWrapper>
         <AtomWrapper css={ChannelImage}>
           <AtomImage
             src={
-              channelsInfo[studioInfo?.name as keyof typeof channelsInfo]?.bg
+              channelsInfo[data?.studioById?.name as keyof typeof channelsInfo]
+                ?.bg
             }
             className="channel-image"
           />
@@ -56,16 +65,8 @@ const ChannelView = () => {
       </Banner>
       <AtomWrapper as="section" css={CartoonsContainer}>
         <AtomWrapper className="cartoons-item-container cartoons-studio">
-          {studioInfo?.series?.map((item, index) => (
-            <Link href={`/${item.id}`} key={item.id} passHref>
-              <CartoonsItem
-                delay={index}
-                studio={studioInfo.name}
-                name={item.title}
-                image={item.image ?? ''}
-                id={item.id}
-              />
-            </Link>
+          {series?.map((item: ISerie, index: number) => (
+            <CartoonsItem key={item.id} delay={index} item={item} />
           ))}
         </AtomWrapper>
       </AtomWrapper>
