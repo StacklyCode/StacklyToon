@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { LISTSTUDIOS } from '@Src/apollo/query/listStudio';
 import Banner from '@Src/components/Banner';
 import CartoonsItem from '@Src/components/Cartoons/components/CartoonsItem';
 import { CartoonsContainer } from '@Src/components/Cartoons/styles';
@@ -9,20 +8,17 @@ import { AtomIcon, AtomImage, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { IQueryFilter } from 'graphql';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { STUDIOBYID } from '../../apollo/query/studioById';
 
 const ChannelView = () => {
   const router = useRouter();
-  const { data } = useQuery<IQueryFilter<'listStudios'>>(LISTSTUDIOS, {
+  const { data } = useQuery<IQueryFilter<'studioById'>>(STUDIOBYID, {
     skip: !router.query.id,
     variables: {
-      filter: {
-        id: {
-          eq: router.query.id
-        }
-      }
+      id: router.query.id
     }
   });
-  const studioInfo = data?.listStudios?.[0];
+  const studioInfo = data?.studioById;
   // TODO: REFACTOR CARTOONS COMPONENT TO RECEIVE DATA
   return (
     <>
