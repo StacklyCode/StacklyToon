@@ -26,7 +26,7 @@ const ChannelView = () => {
   // TODO: REFACTOR CARTOONS COMPONENT TO RECEIVE DATA
   return (
     <>
-      <Banner>
+      <Banner hasDivision>
         <AtomWrapper className={'banner-content'}>
           <AtomText as={'h1'} className={'banner-title'}>
             {studioInfo?.name}

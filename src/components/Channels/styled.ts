@@ -86,3 +86,52 @@ export const ChannelImage = css`
     max-width: 540px;
   }
 `;
+export const ChannelList = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  margin-top: ${calculateInRem(80)};
+  .channel-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: ${calculateInRem(8)};
+    justify-content: center;
+  }
+  .channel-image {
+    background-color: transparent;
+    margin-bottom: 0;
+    border-radius: 10px;
+    &:hover {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    img {
+      background-color: transparent;
+      object-fit: contain;
+      width: 120px;
+      height: 170px;
+      border-radius: 10px;
+      border: 1px solid #e1e0e0;
+      cursor: pointer;
+    }
+  }
+  .channel-name {
+    font-weight: bold;
+    color: #2c2222;
+  }
+  @media screen and (min-width: ${ResponsiveQueries.sm}) {
+    .channel-image img {
+      width: 150px;
+    }
+  }
+  @media screen and (min-width: ${ResponsiveQueries.lg}) {
+    justify-content: center;
+    .channel-image img {
+      width: 180px;
+    }
+  }
+  @media screen and (min-width: ${ResponsiveQueries.xl}) {
+    justify-content: flex-start;
+  }
+`;
