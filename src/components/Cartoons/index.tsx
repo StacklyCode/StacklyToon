@@ -18,11 +18,12 @@ const Cartoons = () => {
   const setItems = useSetAtom(itemsAtom);
   const [series, setSeries] = useAtom(seriesAtom);
   const seriesFiltered = useAtomValue(seriesFilteredAtom);
-  useQuery<IQueryFilter<'listSeries'>>(LISTSERIES, {
-    onCompleted: (data) => {
-      setSeries(data.listSeries);
-    }
-  });
+  const { data } = useQuery<IQueryFilter<'listSeries'>>(LISTSERIES, {});
+
+  useEffect(() => {
+    setSeries(data?.listSeries);
+  }, [data]);
+
   const { scrollYProgress } = useViewportScroll();
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Cartoons = () => {
       </AtomWrapper>
       <AtomWrapper className="cartoons-item-container">
         {seriesFiltered?.map((item, index) => (
-          <Link href={`/serie/${item.id}`} key={item.id} passHref>
+          <Link href={`/${item.id}`} key={item.id} passHref>
             <CartoonsItem
               delay={index}
               studio={item.studio.name}

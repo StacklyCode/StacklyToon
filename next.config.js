@@ -5,6 +5,6 @@
 module.exports = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['storage.googleapis.com']
+    domains: ['storage.googleapis.com', 'www.lacartoons.com']
   }
 };

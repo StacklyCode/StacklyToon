@@ -57,7 +57,7 @@ const ChannelView = () => {
       <AtomWrapper as="section" css={CartoonsContainer}>
         <AtomWrapper className="cartoons-item-container cartoons-studio">
           {studioInfo?.series?.map((item, index) => (
-            <Link href={`/serie/${item.id}`} key={item.id} passHref>
+            <Link href={`/${item.id}`} key={item.id} passHref>
               <CartoonsItem
                 delay={index}
                 studio={studioInfo.name}
