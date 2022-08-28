@@ -10,6 +10,15 @@ export const EPISODEBYID = gql`
       valoration
       video
       position
+      season {
+        id
+        title
+        serie {
+          id
+          title
+          image
+        }
+      }
     }
   }
 `;

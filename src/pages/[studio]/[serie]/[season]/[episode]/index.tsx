@@ -4,15 +4,20 @@ import { EPISODEBYID } from '@Src/apollo/query/episodeById';
 import { SERIESBYID } from '@Src/apollo/query/serieById';
 import { AtomImage, AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { IEpisode, IQueryFilter } from 'graphql';
+// import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+// const Player = dynamic(import('@Src/components/Player'), { ssr: false });
+
 const SerieItemPage = () => {
   const router = useRouter();
+  const [video, setVideo] = useState<string | null>(null);
   const { data } = useQuery<IQueryFilter<'episodeById'>>(EPISODEBYID, {
     variables: {
       id: router.query.episode
     }
   });
+  console.warn(video);
 
   const { data: dataSerie } = useQuery<IQueryFilter<'serieById'>>(SERIESBYID, {
     variables: {
@@ -69,6 +74,18 @@ const SerieItemPage = () => {
     return sortedEpisodes?.[episodeIndex + 1];
   }, [dataSerie, router]);
 
+  useEffect(() => {
+    if (data?.episodeById?.video) {
+      const url = data?.episodeById?.video?.replace(
+        'https://www.ok.ru/videoembed/',
+        '/video/'
+      );
+      getVideo(url, (blob) => {
+        setVideo(blob);
+      });
+    }
+  }, [data]);
+
   return (
     <>
       <AtomLink
@@ -99,6 +116,26 @@ const SerieItemPage = () => {
         `}
       >
         <AtomText>{data?.episodeById?.title}</AtomText>
+        {/* <Player
+          config={{
+            id: 'tplayernext',
+            source: {
+              hls: video
+            },
+            sourceHeaders: {
+              dash: {
+                // "T-Header": "You can send header like this",
+              },
+              hls: {
+                // "T-Header": "You can send header like this",
+              }
+            },
+
+            ui: {
+              mainColor: '#d70c06'
+            }
+          }}
+        /> */}
         <AtomWrapper
           css={css`
             position: relative;
@@ -115,7 +152,12 @@ const SerieItemPage = () => {
             }
           `}
         >
-          <iframe src={data?.episodeById?.video} />
+          <iframe
+            src={`${data?.episodeById?.video}?autoplay=1`}
+            frameBorder="0"
+            allow="autoplay"
+            id="video"
+          />
         </AtomWrapper>
       </AtomWrapper>
       <AtomWrapper
@@ -212,3 +254,26 @@ const SerieItemPage = () => {
   );
 };
 export default SerieItemPage;
+
+const getVideo = async (url: string, callback: (blob: string) => void) => {
+  const userAgent =
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0';
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': userAgent
+    }
+  });
+  const text = await response.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, 'text/html');
+  //get by [data-module="OKVideo"]
+  const video = doc.querySelector('[data-module="OKVideo"]');
+  const urlOptions = video?.getAttribute('data-options');
+  const getOptions = JSON.parse(urlOptions ?? '{}');
+  const getMetaData = JSON.parse(getOptions?.flashvars?.metadata ?? '{}');
+  const urlMeta = getMetaData?.hlsManifestUrl?.replace(
+    'https://vd255.mycdn.me',
+    '/mycdn'
+  );
+  callback(urlMeta ?? null);
+};

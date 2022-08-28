@@ -1,7 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import CONFIG from '@Config/index';
+import CONFIG from '@Src/config/index';
 
 const httpLink = createHttpLink({
   uri: `${CONFIG.GRAPHQL_URL}`
