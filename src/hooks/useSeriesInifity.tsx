@@ -20,7 +20,7 @@ const useSeriesInifity = (props?: OperationVariables) => {
 
   useEffect(() => {
     return scrollYProgress.onChange((latest) => {
-      if (latest > 0.9) {
+      if (latest > 0.8 && (data?.listSeries?.length ?? 0) > 0) {
         setItems((prev) => Math.min(data?.listSeries?.length ?? 0, prev + 24));
       }
     });

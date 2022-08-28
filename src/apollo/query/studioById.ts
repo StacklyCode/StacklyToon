@@ -1,13 +1,15 @@
 import { gql } from '@apollo/client';
 
 export const STUDIOBYID = gql`
-  query StudioById($id: UUID!) {
+  query ($id: UUID!) {
     studioById(studioId: $id) {
-      createdAt
-      id
-      description
-      updatedAt
       name
+      description
+      id
+      series {
+        title
+        image
+      }
     }
   }
 `;

@@ -8,7 +8,7 @@ import { NextPageFC } from 'next';
 const PageIndex: NextPageFC = () => {
   return (
     <>
-      <Banner>
+      <Banner hasDivision>
         <AtomWrapper className={'banner-content'}>
           <AtomText as={'h1'} className={'banner-title'}>
             Recordar tu infancia, es volver a vivir.

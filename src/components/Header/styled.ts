@@ -28,6 +28,7 @@ export const HeaderLinks = css`
   flex-direction: row;
   width: max-content;
   gap: ${calculateInRem(32)};
+  overflow: hidden;
   a {
     cursor: pointer;
   }

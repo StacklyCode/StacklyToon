@@ -6,14 +6,26 @@ export const SERIESBYID = gql`
       id
       title
       image
+      language {
+        name
+      }
+      studio {
+        name
+      }
       studioId
+      productionYear
       seasons {
         id
         title
         episodes {
-          id
+          video
+          image
           title
+          id
           seasonId
+          season {
+            title
+          }
         }
       }
     }

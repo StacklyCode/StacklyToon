@@ -23,12 +23,3 @@ export const EPISODEBYID = gql`
   }
 `;
 
-// season {
-//   id
-//   title
-//   serie {
-//     id
-//     title
-//     image
-//   }
-// }
