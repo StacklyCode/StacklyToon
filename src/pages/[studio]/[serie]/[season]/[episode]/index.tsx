@@ -6,12 +6,12 @@ import { AtomImage, AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { IEpisode, IQueryFilter } from 'graphql';
 // import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 // const Player = dynamic(import('@Src/components/Player'), { ssr: false });
 
 const SerieItemPage = () => {
   const router = useRouter();
-  const [video, setVideo] = useState<string | null>(null);
+  const [video] = useState<string | null>(null);
   const { data } = useQuery<IQueryFilter<'episodeById'>>(EPISODEBYID, {
     variables: {
       id: router.query.episode
@@ -74,17 +74,17 @@ const SerieItemPage = () => {
     return sortedEpisodes?.[episodeIndex + 1];
   }, [dataSerie, router]);
 
-  useEffect(() => {
-    if (data?.episodeById?.video) {
-      const url = data?.episodeById?.video?.replace(
-        'https://www.ok.ru/videoembed/',
-        '/video/'
-      );
-      getVideo(url, (blob) => {
-        setVideo(blob);
-      });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data?.episodeById?.video) {
+  //     const url = data?.episodeById?.video?.replace(
+  //       'https://www.ok.ru/videoembed/',
+  //       '/video/'
+  //     );
+  //     getVideo(url, (blob) => {
+  //       setVideo(blob);
+  //     });
+  //   }
+  // }, [data]);
 
   return (
     <>
@@ -255,25 +255,25 @@ const SerieItemPage = () => {
 };
 export default SerieItemPage;
 
-const getVideo = async (url: string, callback: (blob: string) => void) => {
-  const userAgent =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0';
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': userAgent
-    }
-  });
-  const text = await response.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'text/html');
-  //get by [data-module="OKVideo"]
-  const video = doc.querySelector('[data-module="OKVideo"]');
-  const urlOptions = video?.getAttribute('data-options');
-  const getOptions = JSON.parse(urlOptions ?? '{}');
-  const getMetaData = JSON.parse(getOptions?.flashvars?.metadata ?? '{}');
-  const urlMeta = getMetaData?.hlsManifestUrl?.replace(
-    'https://vd255.mycdn.me',
-    '/mycdn'
-  );
-  callback(urlMeta ?? null);
-};
+// const getVideo = async (url: string, callback: (blob: string) => void) => {
+//   const userAgent =
+//     'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0';
+//   const response = await fetch(url, {
+//     headers: {
+//       'User-Agent': userAgent
+//     }
+//   });
+//   const text = await response.text();
+//   const parser = new DOMParser();
+//   const doc = parser.parseFromString(text, 'text/html');
+//   //get by [data-module="OKVideo"]
+//   const video = doc.querySelector('[data-module="OKVideo"]');
+//   const urlOptions = video?.getAttribute('data-options');
+//   const getOptions = JSON.parse(urlOptions ?? '{}');
+//   const getMetaData = JSON.parse(getOptions?.flashvars?.metadata ?? '{}');
+//   const urlMeta = getMetaData?.hlsManifestUrl?.replace(
+//     'https://vd255.mycdn.me',
+//     '/mycdn'
+//   );
+//   callback(urlMeta ?? null);
+// };
