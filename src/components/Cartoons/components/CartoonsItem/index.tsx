@@ -1,28 +1,30 @@
-import { AtomImage, AtomText, AtomWrapper } from '@stacklycore/ui';
-import Link from 'next/link';
+import { AtomImage, AtomLink, AtomText, AtomWrapper } from '@stacklycore/ui';
 import { FC } from 'react';
+import { cartoonsItem, RandomNumberBetween } from '../../styles';
 import { ICartoonItem } from './types';
-const CartoonsItem: FC<ICartoonItem> = ({ image, name, studio, delay, id }) => {
+const CartoonsItem: FC<ICartoonItem> = (props) => {
+  const { delay, item } = props;
+  const { id, image, title, studio } = item;
   return (
-    <Link href={`/serie/${id}`} passHref style={{ cursor: 'pointer' }}>
+    <AtomLink link={`/${studio?.id}/${id}`}>
       <AtomWrapper
-        className="cartoon-item"
+        css={cartoonsItem(RandomNumberBetween(-8, 8))}
         animate={{}}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ delay: delay * 0.01, duration: 0.1 }}
+        transition={{ delay: delay * 0.001, duration: 0.1 }}
       >
         <AtomImage src={image} className="cartoon-item-image" />
         <AtomWrapper>
           <AtomText as="p" className="cartoon-item-studio">
-            {studio}
+            {studio?.name}
           </AtomText>
           <AtomText as="h2" className="cartoon-item-text">
-            {name}
+            {title}
           </AtomText>
         </AtomWrapper>
       </AtomWrapper>
-    </Link>
+    </AtomLink>
   );
 };
 

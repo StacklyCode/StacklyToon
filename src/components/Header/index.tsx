@@ -16,7 +16,7 @@ const Header = () => {
       />
       <InputSearch />
       <AtomWrapper as="div" css={HeaderLinks}>
-        <AtomLink link="/series" astheme={'secondary'}>
+        <AtomLink link="/" astheme={'secondary'}>
           Series
         </AtomLink>
         <AtomLink link="/canales" astheme={'secondary'}>

@@ -5,6 +5,17 @@ export const SERIESBYID = gql`
     serieById(serieId: $id) {
       id
       title
+      image
+      studioId
+      seasons {
+        id
+        title
+        episodes {
+          id
+          title
+          seasonId
+        }
+      }
     }
   }
 `;

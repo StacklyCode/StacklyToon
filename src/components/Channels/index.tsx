@@ -27,7 +27,7 @@ const Channels = () => {
           customCSS={SwipperChannelCSS}
         >
           {data?.listStudios.map((item) => (
-            <Link href={`/canal/${item.id}`} key={item.id} passHref>
+            <Link href={`/${item.id}`} key={item.id} passHref>
               <AtomImage
                 className="channel-image"
                 src={
