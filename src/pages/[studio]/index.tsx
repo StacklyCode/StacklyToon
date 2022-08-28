@@ -46,7 +46,7 @@ const ChannelView = () => {
 
   return (
     <>
-      <Banner>
+      <Banner hasDivision>
         <AtomWrapper className={'banner-content'}>
           <AtomText as={'h1'} className={'banner-title'}>
             {data?.studioById?.name}
