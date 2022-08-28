@@ -19,7 +19,7 @@ const Header = () => {
         <AtomLink link="/" astheme={'secondary'}>
           Series
         </AtomLink>
-        <AtomLink link="/canales" astheme={'secondary'}>
+        <AtomLink link="/channels" astheme={'secondary'}>
           Canales
         </AtomLink>
       </AtomWrapper>
